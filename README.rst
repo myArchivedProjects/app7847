@@ -53,10 +53,6 @@ Run tests:
       (cd tests && lettuce)
 
 
-
-  .. line-block::
-
-
       **Feature: Publish a message**                        # features/publish-a-message.feature:1
         **In order to test the publish method**             # features/publish-a-message.feature:2
         **As a user**                                       # features/publish-a-message.feature:3
