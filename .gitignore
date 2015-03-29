@@ -1,0 +1,8 @@
+lib
+pip-shelcheck.json
+include
+dump.rdb
+app.pyc
+.idea
+share
+bin
