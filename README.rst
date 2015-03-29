@@ -20,123 +20,136 @@ You'll need:
 To build:
 ----------
 
-* boot2docker init
-* boot2docker up
-* pip2 -r requirements.txt
+  .. line-block::
+
+      boot2docker init
+      boot2docker up
+      pip2 -r requirements.txt
 
 If you get a TLS error, then you may need to temporarly disable TLS
 see: https://github.com/docker/compose/issues/890#issuecomment-84468058
 
-* docker-compose build
+  .. line-block::
+
+    docker-compose build
 
 To run:
 --------
-* docker-compose up
+
+  .. line-block::
+
+    docker-compose up
 
 
 Integration tests:
 --------------------
-Run tests:
 
-* docker-compose up
-* export BOOT2DOCKERIP=$( boot2docker ip)
-* (cd tests && lettuce)
+Run tests:
 
   .. line-block::
 
-      Feature: Publish a message                        # features/publish-a-message.feature:1
-        In order to test the publish method             # features/publish-a-message.feature:2
-        As a user                                       # features/publish-a-message.feature:3
-        I will publish a message to a topic             # features/publish-a-message.feature:4
+      docker-compose up
+      export BOOT2DOCKERIP=$( boot2docker ip)
+      (cd tests && lettuce)
 
-        Scenario: Publish a message to a topic          # features/publish-a-message.feature:6
-          Given I create a new topic using POST /topic0 # features/test_helpers.py:9
-          Then I should get a 200 back                  # features/test_helpers.py:51
 
-      Feature: Retrieve the next message from a topic                    # features/retrieve-the-next-message-from-a-topic.feature:2
-        In order to test the read_next messages method                   # features/retrieve-the-next-message-from-a-topic.feature:3
-        As a user                                                        # features/retrieve-the-next-message-from-a-topic.feature:4
-        I will retrieve a message                                        # features/retrieve-the-next-message-from-a-topic.feature:5
 
-        Scenario: 200: Retrieval succeeded                               # features/retrieve-the-next-message-from-a-topic.feature:7
-          Given I create a new topic using POST /topic1                  # features/test_helpers.py:9
-          When I subscribe using POST /topic1/user1                      # features/test_helpers.py:25
-          And I publish a message 'message1' with a POST /topic1         # features/test_helpers.py:17
-          And discard the first 'subscribe' message from /topic1/user1   # features/test_helpers.py:45
-          And get new messages using GET /topic1/user1                   # features/test_helpers.py:39
-          Then I should see 'message1' in the body of the message        # features/test_helpers.py:57
-          And I should get a 200 back                                    # features/test_helpers.py:51
+  .. line-block::
 
-        Scenario: 204: No messages available on this topic for this user # features/retrieve-the-next-message-from-a-topic.feature:16
-          Given I create a new topic using POST /topic2                  # features/test_helpers.py:9
-          When I subscribe using POST /topic2/user1                      # features/test_helpers.py:25
-          And I publish a message 'message1' with a POST /topic1         # features/test_helpers.py:17
-          And I publish a message 'message2' with a POST /topic1         # features/test_helpers.py:17
-          And I publish a message 'message3' with a POST /topic1         # features/test_helpers.py:17
-          And discard the first 'subscribe' message from /topic1/user1   # features/test_helpers.py:45
-          And get new messages using GET /topic1/user1                   # features/test_helpers.py:39
-          And get new messages using GET /topic1/user1                   # features/test_helpers.py:39
-          And get new messages using GET /topic1/user1                   # features/test_helpers.py:39
-          Then I should receive nothing                                  # features/test_helpers.py:63
-          And I should get a 204 back                                    # features/test_helpers.py:51
 
-        Scenario: 404: The subscription does not exist                   # features/retrieve-the-next-message-from-a-topic.feature:29
-          Given The subscription does not exist                          # features/test_helpers.py:69
-          When get new messages using GET /topic1/user1                  # features/test_helpers.py:39
-          Then I should get a 204 back                                   # features/test_helpers.py:51
+      **Feature: Publish a message**                        # features/publish-a-message.feature:1
+        **In order to test the publish method**             # features/publish-a-message.feature:2
+        **As a user**                                       # features/publish-a-message.feature:3
+        **I will publish a message to a topic**             # features/publish-a-message.feature:4
 
-        Scenario: Two users, one message, same topic                     # features/retrieve-the-next-message-from-a-topic.feature:34
-          Given I create a new topic using POST /topic3                  # features/test_helpers.py:9
-          When I subscribe using POST /topic3/user1                      # features/test_helpers.py:25
-          And I subscribe using POST /topic3/user2                       # features/test_helpers.py:25
-          And I publish a message 'message1' with a POST /topic3         # features/test_helpers.py:17
-          And discard the first 'subscribe' message from /topic3/user1   # features/test_helpers.py:45
-          And discard the first 'subscribe' message from /topic3/user2   # features/test_helpers.py:45
-          And get new messages using GET /topic3/user1                   # features/test_helpers.py:39
-          Then I should see 'message1' in the body of the message        # features/test_helpers.py:57
-          And I should get a 200 back                                    # features/test_helpers.py:51
-          When get new messages using GET /topic3/user2                  # features/test_helpers.py:39
-          Then I should see 'message1' in the body of the message        # features/test_helpers.py:57
-          And I should get a 200 back                                    # features/test_helpers.py:51
+        **Scenario: Publish a message to a topic**          # features/publish-a-message.feature:6
+          **Given I create a new topic using POST /topic0** # features/test_helpers.py:9
+          **Then I should get a 200 back**                  # features/test_helpers.py:51
 
-      Feature: Subscribe to a topic                                    # features/subscribe-to-a-topic.feature:1
-        In order to test the Subscription method                       # features/subscribe-to-a-topic.feature:2
-        As a user                                                      # features/subscribe-to-a-topic.feature:3
-        I will subscribe to a topic                                    # features/subscribe-to-a-topic.feature:4
+      **Feature: Retrieve the next message from a topic**                    # features/retrieve-the-next-message-from-a-topic.feature:2
+        **In order to test the read_next messages method**                   # features/retrieve-the-next-message-from-a-topic.feature:3
+        **As a user**                                                        # features/retrieve-the-next-message-from-a-topic.feature:4
+        **I will retrieve a message**                                        # features/retrieve-the-next-message-from-a-topic.feature:5
 
-        Scenario: Subscribe to a topic                                 # features/subscribe-to-a-topic.feature:6
-          Given I create a new topic using POST /topic0                # features/test_helpers.py:9
-          When I subscribe using POST /topic0/user1                    # features/test_helpers.py:25
-          Then I should get a 200 back                                 # features/test_helpers.py:51
+        **Scenario: 200: Retrieval succeeded**                               # features/retrieve-the-next-message-from-a-topic.feature:7
+          **Given I create a new topic using POST /topic1**                  # features/test_helpers.py:9
+          **When I subscribe using POST /topic1/user1**                      # features/test_helpers.py:25
+          **And I publish a message 'message1' with a POST /topic1**         # features/test_helpers.py:17
+          **And discard the first 'subscribe' message from /topic1/user1**   # features/test_helpers.py:45
+          **And get new messages using GET /topic1/user1**                   # features/test_helpers.py:39
+          **Then I should see 'message1' in the body of the message**        # features/test_helpers.py:57
+          **And I should get a 200 back**                                    # features/test_helpers.py:51
 
-        Scenario: Two users, one message, same topic                   # features/subscribe-to-a-topic.feature:11
-          Given I create a new topic using POST /topic3                # features/test_helpers.py:9
-          When I subscribe using POST /topic3/user1                    # features/test_helpers.py:25
-          And I subscribe using POST /topic3/user2                     # features/test_helpers.py:25
-          And I publish a message 'message1' with a POST /topic3       # features/test_helpers.py:17
-          And discard the first 'subscribe' message from /topic3/user1 # features/test_helpers.py:45
-          And discard the first 'subscribe' message from /topic3/user2 # features/test_helpers.py:45
-          And get new messages using GET /topic3/user1                 # features/test_helpers.py:39
-          Then I should see 'message1' in the body of the message      # features/test_helpers.py:57
-          And I should get a 200 back                                  # features/test_helpers.py:51
-          When get new messages using GET /topic3/user2                # features/test_helpers.py:39
-          Then I should see 'message1' in the body of the message      # features/test_helpers.py:57
-          And I should get a 200 back                                  # features/test_helpers.py:51
+        **Scenario: 204: No messages available on this topic for this user** # features/retrieve-the-next-message-from-a-topic.feature:16
+          **Given I create a new topic using POST /topic2**                  # features/test_helpers.py:9
+          **When I subscribe using POST /topic2/user1**                      # features/test_helpers.py:25
+          **And I publish a message 'message1' with a POST /topic1**         # features/test_helpers.py:17
+          **And I publish a message 'message2' with a POST /topic1**         # features/test_helpers.py:17
+          **And I publish a message 'message3' with a POST /topic1**         # features/test_helpers.py:17
+          **And discard the first 'subscribe' message from /topic1/user1**   # features/test_helpers.py:45
+          **And get new messages using GET /topic1/user1**                   # features/test_helpers.py:39
+          **And get new messages using GET /topic1/user1**                   # features/test_helpers.py:39
+          **And get new messages using GET /topic1/user1**                   # features/test_helpers.py:39
+          **Then I should receive nothing**                                  # features/test_helpers.py:63
+          **And I should get a 204 back**                                    # features/test_helpers.py:51
 
-      Feature: Unsubscribe from a topic                  # features/unsubscribe-from-a-topic.feature:1
-        In order to test the Unsubscribe method          # features/unsubscribe-from-a-topic.feature:2
-        As a user                                        # features/unsubscribe-from-a-topic.feature:3
-        I will unsubscribe from a topic                  # features/unsubscribe-from-a-topic.feature:4
+        **Scenario: 404: The subscription does not exist**                   # features/retrieve-the-next-message-from-a-topic.feature:29
+          **Given The subscription does not exist**                          # features/test_helpers.py:69
+          **When get new messages using GET /topic1/user1**                  # features/test_helpers.py:39
+          **Then I should get a 204 back**                                   # features/test_helpers.py:51
 
-        Scenario: Unsubscribe from a subscribed topic    # features/unsubscribe-from-a-topic.feature:6
-          Given I create a new topic using POST /topic0  # features/test_helpers.py:9
-          When I subscribe using POST /topic0/user1      # features/test_helpers.py:25
-          And I unsubscribe using DELETE /topic0/user1   # features/test_helpers.py:33
-          Then I should get a 200 back                   # features/test_helpers.py:51
+        **Scenario: Two users, one message, same topic**                     # features/retrieve-the-next-message-from-a-topic.feature:34
+          **Given I create a new topic using POST /topic3**                  # features/test_helpers.py:9
+          **When I subscribe using POST /topic3/user1**                      # features/test_helpers.py:25
+          **And I subscribe using POST /topic3/user2**                       # features/test_helpers.py:25
+          **And I publish a message 'message1' with a POST /topic3**         # features/test_helpers.py:17
+          **And discard the first 'subscribe' message from /topic3/user1**   # features/test_helpers.py:45
+          **And discard the first 'subscribe' message from /topic3/user2**   # features/test_helpers.py:45
+          **And get new messages using GET /topic3/user1**                   # features/test_helpers.py:39
+          **Then I should see 'message1' in the body of the message**        # features/test_helpers.py:57
+          **And I should get a 200 back**                                    # features/test_helpers.py:51
+          **When get new messages using GET /topic3/user2**                  # features/test_helpers.py:39
+          **Then I should see 'message1' in the body of the message**        # features/test_helpers.py:57
+          **And I should get a 200 back**                                    # features/test_helpers.py:51
 
-        Scenario: Unsubscribe from an unsubscribe topic  # features/unsubscribe-from-a-topic.feature:12
-          Given I unsubscribe using DELETE /topic0/user1 # features/test_helpers.py:33
-          Then I should get a 404 back                   # features/test_helpers.py:51
+      **Feature: Subscribe to a topic**                                    # features/subscribe-to-a-topic.feature:1
+        **In order to test the Subscription method**                       # features/subscribe-to-a-topic.feature:2
+        **As a user**                                                      # features/subscribe-to-a-topic.feature:3
+        **I will subscribe to a topic**                                    # features/subscribe-to-a-topic.feature:4
+
+        **Scenario: Subscribe to a topic**                                 # features/subscribe-to-a-topic.feature:6
+          **Given I create a new topic using POST /topic0**                # features/test_helpers.py:9
+          **When I subscribe using POST /topic0/user1**                    # features/test_helpers.py:25
+          **Then I should get a 200 back**                                 # features/test_helpers.py:51
+
+        **Scenario: Two users, one message, same topic**                   # features/subscribe-to-a-topic.feature:11
+          **Given I create a new topic using POST /topic3**                # features/test_helpers.py:9
+          **When I subscribe using POST /topic3/user1**                    # features/test_helpers.py:25
+          **And I subscribe using POST /topic3/user2**                     # features/test_helpers.py:25
+          **And I publish a message 'message1' with a POST /topic3**       # features/test_helpers.py:17
+          **And discard the first 'subscribe' message from /topic3/user1** # features/test_helpers.py:45
+          **And discard the first 'subscribe' message from /topic3/user2** # features/test_helpers.py:45
+          **And get new messages using GET /topic3/user1**                 # features/test_helpers.py:39
+          **Then I should see 'message1' in the body of the message**      # features/test_helpers.py:57
+          **And I should get a 200 back**                                  # features/test_helpers.py:51
+          **When get new messages using GET /topic3/user2**                # features/test_helpers.py:39
+          **Then I should see 'message1' in the body of the message**      # features/test_helpers.py:57
+          **And I should get a 200 back**                                  # features/test_helpers.py:51
+
+      **Feature: Unsubscribe from a topic**                  # features/unsubscribe-from-a-topic.feature:1
+        **In order to test the Unsubscribe method**          # features/unsubscribe-from-a-topic.feature:2
+        **As a user**                                        # features/unsubscribe-from-a-topic.feature:3
+        **I will unsubscribe from a topic**                  # features/unsubscribe-from-a-topic.feature:4
+
+        **Scenario: Unsubscribe from a subscribed topic**    # features/unsubscribe-from-a-topic.feature:6
+          **Given I create a new topic using POST /topic0**  # features/test_helpers.py:9
+          **When I subscribe using POST /topic0/user1**      # features/test_helpers.py:25
+          **And I unsubscribe using DELETE /topic0/user1**   # features/test_helpers.py:33
+          **Then I should get a 200 back**                   # features/test_helpers.py:51
+
+        **Scenario: Unsubscribe from an unsubscribe topic**  # features/unsubscribe-from-a-topic.feature:12
+          **Given I unsubscribe using DELETE /topic0/user1** # features/test_helpers.py:33
+          **Then I should get a 404 back**                   # features/test_helpers.py:51
 
       4 features (4 passed)
       9 scenarios (9 passed)
@@ -145,13 +158,15 @@ Run tests:
 To consume:
 ------------
 
-* docker-compose up
-* export BOOT2DOCKERIP=$( boot2docker ip)
+  .. line-block::
 
-curl -x POST -d "message1"  http://$BOOT2DOCKERIP:5000/topic1/user1
-curl -x POST  http://$BOOT2DOCKERIP:5000/topic1/user1
-curl -x GET  http://$BOOT2DOCKERIP:5000/topic1/user1
-curl -x DELETE  http://$BOOT2DOCKERIP:5000/topic1/user1
+      docker-compose up
+      export BOOT2DOCKERIP=$( boot2docker ip)
+
+      curl -x POST -d "message1"  http://$BOOT2DOCKERIP:5000/topic1/user1
+      curl -x POST  http://$BOOT2DOCKERIP:5000/topic1/user1
+      curl -x GET  http://$BOOT2DOCKERIP:5000/topic1/user1
+      curl -x DELETE  http://$BOOT2DOCKERIP:5000/topic1/user1
 
 
 Improvements sorted by benefits:
